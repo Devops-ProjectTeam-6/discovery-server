@@ -3,5 +3,7 @@ FROM openjdk:17-jdk-alpine3.14
 
 # Set working directory in the container
 WORKDIR /app
-CMD ["./gradlew", "clean", "bootJar"]
+COPY --chown=gradle:gradle build.gradle settings.gradle ./
+COPY --chown=gradle:gradle src ./src
+RUN gradle build --no-daemon 
 COPY build/libs/*.jar app.jar
